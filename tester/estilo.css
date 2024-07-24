@@ -1,0 +1,21 @@
+body {
+	background-color: lightblue;
+	font-family: arial;
+	color: black;
+}
+h2{
+	font-style: italic;
+}
+p {
+	margin-left: 2rem;
+}
+.ok{
+	background-color: green;
+	color: white;
+	font-weight: 700;
+}
+.ko{
+	background-color: red;
+	color: white;
+	font-weight: 700;
+}
