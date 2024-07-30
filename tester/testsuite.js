@@ -29,7 +29,12 @@ export class TestSuite {
 	ejecutar(){
 		this.#testCases.forEach( testCase => {
 			this.#tester.registrarTestCase(this.getNombre(), testCase.getNombre())
-			testCase.ejecutar() 
+			try{
+				testCase.ejecutar() 
+			}
+			catch(error){
+				testCase.fallar(error)
+			}
 		})
 	}
 

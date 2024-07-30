@@ -69,6 +69,11 @@ class Tester{
 	actualizarResultados(){
 		this.#vistaResultados.actualizar(this.#resultados)	
 	}
+
+	registrarError(evento){
+		console.log('Registrado error global')
+		console.log(evento)
+	}
 }
 
 class VistaResultados{
@@ -82,15 +87,23 @@ class VistaResultados{
 	}
 
 	actualizar(resultados){
+		let superados = 0
+		let total = 0
+
 		this.#base.innerHTML = ''
 		const h1 = document.createElement('h1')
 		this.#base.appendChild(h1)
+		
+		const pTotal = document.createElement('p')
+		this.#base.appendChild(pTotal)
+
 		h1.textContent = 'Resultados'
 		resultados.forEach( (testscases, testSuite) => {
 			const h2 = document.createElement('h2')
 			this.#base.appendChild(h2)
 			h2.textContent = `${testSuite}`
 			testscases.forEach( (resultado, testCase) => {
+				total++
 				const p = document.createElement('p')
 				this.#base.appendChild(p)
 				p.textContent = `${testCase}: `
@@ -100,6 +113,7 @@ class VistaResultados{
 					if (resultado[0] === true){
 						p.textContent += `OK`
 						p.classList.add('ok')
+						superados++
 					}
 					else{
 						p.textContent += `KO (${resultado[1]})`
@@ -108,8 +122,10 @@ class VistaResultados{
 				}
 			})
 		})
+		pTotal.textContent = `Superados ${superados}/${total} tests`
 	}
 }
 
 const tester = new Tester('../lista_testsuites.js', new VistaResultados())
 window.onload = tester.ejecutar
+window.onerror = tester.registrarError
